@@ -1,7 +1,35 @@
 <template>
   <div class="container">
     <div class="row mt-2">
-      <div class="col mb-2">Palco</div>
+      
+      <!-- início lado esquerdo -->
+      <div class="col mb-2">
+        <div class="card palco">
+          <div class="card-header"></div>
+
+          <div class="card-body bg-pokebola bg-normal">
+            <div class="pokemon">
+              <transition>
+              <img src="@/assets/imgs/pokemons/001.png" v-if="exibir">
+          
+            </transition>
+            </div>
+          </div>
+
+          <div class="card-footer">
+         
+          <nav class="nav nav-pills nav-fill">
+            <!-- menu de navegação -->
+          </nav>
+
+          <div class="detalhes">
+            <!-- exibe dados de acordo com o menu de navegação -->
+          </div>
+
+          </div>
+        </div>
+      </div>
+      <!-- fim lado esquerdo -->
 
       <!-- início lado direito -->
       <div class="col mb-2 pokedex">        
@@ -14,8 +42,8 @@
         <div class="row">
           <div class="col">
             <select class="form-select">
-              <option>ID Crescente</option>
-              <option>ID Decrescrente</option>
+              <option>Id crescente</option>
+              <option>Id decrescrente</option>
               <option>De A - Z</option>
             </select>
           </div>
@@ -29,11 +57,11 @@
           <div class="pokedex-catalogo">
 
             <!-- início listagem dinâmica -->
-            <div class="cartao-pokemon bg-grama">
+            <div class="cartao-pokemon bg-grama" @click="exibir =  !exibir">
               <h1>1 Bulbasaur</h1>
-              <span>Grama</span>
+              <span>grama</span>
               <div class="cartao-pokemon-img">
-                <img src="@/assets/imgs/001.png">
+                <img src="@/assets/imgs/pokemons/001.png" >
               </div>
             </div>
             <!-- fim listagem dinâmica -->
@@ -49,7 +77,10 @@
 
 <script>
 export default {
-  name: 'HomeView'
+  name: 'HomeView',
+  data: () => ({
+    exibir: false
+  })
 }
 </script>
 
@@ -131,6 +162,31 @@ body {
 
 .bg-normal {
   background-color: #cecece
+}
+
+.bg-pokebola {
+  background-image: url("@/assets/pokebola.png");
+  background-repeat: no-repeat;
+  background-position: bottom right;
+}
+
+.palco {
+  color: #fff;
+  background-color: #333;
+  -webkit-box-shadow: 2px 2px 10px rgba(230, 223, 223, 0.77);
+  -moz-box-shadow: 2px 2px 10px rgba(230, 223, 223, 0.77);
+  box-shadow: 2px 2px 10px rgba(230, 223, 223, 0.77);
+  border-radius: 10px;
+}
+
+.pokemon {
+  display: block;
+  text-align: center;
+  height: 215px;
+}
+
+.detalhes {
+  margin: 20px 30px 20px 30px;
 }
 
 </style>
