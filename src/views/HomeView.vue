@@ -9,10 +9,11 @@
 
           <div class="card-body bg-pokebola bg-normal">
             <div class="pokemon">
+              <div class="evolucoes">
               <transition>
               <img src="@/assets/imgs/pokemons/001.png" v-if="exibir">
-          
-            </transition>
+            </transition> 
+          </div>
             </div>
           </div>
 
@@ -91,6 +92,62 @@ body {
 </style>
 
 <style scoped>
+ /*
+.v-enter-from {
+opacity: 0;
+}
+.v-enter-active {
+  transition: opacity 0.5s ;
+}
+.v-enter-to {
+opacity: 1;
+}
+
+
+
+
+.v-leave-from {
+opacity: 1;
+}
+.v-leave-active {
+  transition: opacity 0.5s ;
+}
+.v-leave-to {
+opacity: 0;
+}
+*/
+.v-enter-from {
+  transform:translateX(-150px);
+  opacity: 0;
+  
+  }
+
+  .v-enter-active {
+    transition: all 0.5s ;
+  }
+  .v-enter-to {
+    opacity: 1;
+  transform: translateX(0px);
+}
+
+
+.v-leave-from {
+  transform:translateX(0px);
+  opacity: 1;
+  
+  }
+
+  .v-leave-active {
+    transition: all 0.5s ;
+  }
+  .v-leave-to {
+    opacity: 0;
+  transform: translateX(150px);
+}
+
+
+
+
 .pokedex {
   padding: 20px;
   background-color: #ffffff;
