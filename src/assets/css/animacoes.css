@@ -117,4 +117,25 @@
 
 
 
+.entrada-estado-inicial{
+    opacity: 0;
+    transform: translateY(-150px);
+}
+.entrada-estado-final{
+    opacity: 1;
+    transform: translateY(0px);
+}
+
+.saida-estado-inicial {
+    opacity: 1;
+    transform: translateY(0px);
+}
+.saida-estado-final {
+    opacity: 0;
+    transform: translateY(50px);
+}
+
+.entrada-transicao, .saida-transicao {
+    transition: all 0.5s;
+}
       
