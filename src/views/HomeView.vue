@@ -20,13 +20,12 @@
               <img :src="require(`@/assets/imgs/pokemons/${pokemon.imagem}`)" v-if="exibir">
             </transition> 
               <div class="evolucoes">
+              {{pokemon.evolucoes}}
+              <transition name="fade" v-for="e in pokemon.evolucoes" :key="e">
+               <img :src="require(`@/assets/imgs/pokemons/${e.toString().padStart(3, '0')}.png`)" v-if="exibirEvolucoes"> 
               
-              <transition name="fade">
-              <img src="@/assets/imgs/pokemons/003.png" v-if="exibirEvolucoes">
             </transition> 
-              <transition name="fade">
-              <img src="@/assets/imgs/pokemons/002.png" v-if="exibirEvolucoes">
-            </transition> 
+          
 
           </div>
             </div>
@@ -129,10 +128,11 @@ export default {
       if(this.pokemon.id != p.id && this.exibir == true){
         setTimeout(() => {
           this.analisarPokemon(p)
-        }, 1000);
+        }, 250);
       }
       this.pokemon = p
       this.exibir = !this.exibir
+      this.exibirEvolucoes = !this.exibirEvolucoes
     }
   }
 
@@ -254,6 +254,5 @@ body {
   cursor: pointer;
   max-width: 100%;
   max-height: 100%;
-  float: right;
 }
 </style>
