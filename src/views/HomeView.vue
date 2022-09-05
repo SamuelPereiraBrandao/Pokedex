@@ -10,6 +10,15 @@
           <div class="card-body bg-pokebola bg-normal">
             <div class="pokemon">
               <transition 
+              @before-enter="antesDaEntrada"
+              @enter="duranteAEntrada"
+              @after-enter="aposAEntrada"
+              @enter-cancelled="quandoEntradaCancelada"
+
+              @before-leave="antesDaSaida"
+              @leave="duranteASaida"
+              @after-leave="aposASaida"
+              @leave-cancelled="quandoSaidaCancelada"
               enter-active-class="animate__animated animate__bounceIn"
               leave-active-class="animate__animated animate__bounceOut"
               >
@@ -92,7 +101,37 @@ export default {
   name: 'HomeView',
   data: () => ({
     exibir: false
-  })
+  }),
+  methods:{
+    antesDaEntrada(el){
+      console.log('Antes da entrada', el)
+    },
+    duranteAEntrada(el, done){
+      console.log('Durante a entrada', el)
+      done() //conclusão da transição(entrada)
+    },
+    aposAEntrada(el){
+      console.log("Apos a entrada", el)
+    },
+    quandoEntradaCancelada(el){
+      console.log("Quando a Entrada é cancelada", el)
+    },
+    antesDaSaida(el){
+      console.log("Antes da saída", el)
+    },
+    duranteASaida(el, done){
+      console.log("Durante a saida", el)
+      done()
+    },
+    aposASaida(el){
+      console.log("Após a saída", el)
+    },
+    quandoSaidaCancelada(el){
+      console.log("Quando Saida é cancelada", el)
+    }
+
+
+  }
 }
 </script>
 
