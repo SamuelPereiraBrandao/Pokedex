@@ -2,27 +2,34 @@
     <div>
         <span>Força:</span>
         <div class="progress mb-2">
-            <div class="progress-bar" role="progressbar" style="width: 30%;" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100">30</div>
+            <div class="progress-bar" role="progressbar" :style="`width: ${pokemon.status.forca}%;`" :aria-valuenow="pokemon.status.forca" 
+            aria-valuemin="0" aria-valuemax="100">{{pokemon.status.forca}}</div>
         </div>
 
         <span>Agilidade:</span>
         <div class="progress mb-2">
-            <div class="progress-bar" role="progressbar" style="width: 40%;" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100">40</div>
+            <div class="progress-bar" role="progressbar" :style="`width: ${pokemon.status.agilidade}%;`" :aria-valuenow="pokemon.status.agilidade" 
+            aria-valuemin="0" aria-valuemax="100">{{pokemon.status.agilidade}}</div>
         </div>
 
         <span>Ataque:</span>
         <div class="progress mb-2">
-            <div class="progress-bar" role="progressbar" style="width: 20%;" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">20</div>
+            <div class="progress-bar" role="progressbar" :style="`width: ${pokemon.status.ataque}%;`" :aria-valuenow="pokemon.status.ataque" 
+            aria-valuemin="0" aria-valuemax="100">{{pokemon.status.ataque}}</div>
         </div>
         
         <span>Defesa:</span>
         <div class="progress mb-2">
-            <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25</div>
+            <div class="progress-bar" role="progressbar" :style="`width: ${pokemon.status.defesa}%;`" :aria-valuenow="pokemon.status.defesa" 
+            aria-valuemin="0" aria-valuemax="100">{{pokemon.status.defesa}}</div>
         </div>
     </div>
 </template>
 <script>
     export default {
-        name:'StatusVue'
+        name:'StatusVue',
+        props:{
+            pokemon: Object
+        }
     }
 </script>
