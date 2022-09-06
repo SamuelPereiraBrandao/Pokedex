@@ -42,7 +42,7 @@
           <div class="detalhes">
             <!-- exibe dados de acordo com o menu de navegação -->     
             <!-- {{pokemon}} -->
-            <router-view v-slot="{ Component }" :pokemon="pokemon">
+            <router-view v-slot="{ Component }" :pokemon="pokemon" @adicionarHabilidade="adicionarHabilidade" @removerHabilidade="removerHabilidade">
               <transition
               enter-active-class="animate__animated animate__fadeIn">
                 <component :is="Component" />
@@ -143,6 +143,16 @@ export default {
       //se a ação recursiva nao for chamada
       if(!this.exibir && !mudaPokemonAnalisado){
         this.pokemon = {}
+      }
+    },
+    adicionarHabilidade(habilidade){
+      if(this.pokemon.habilidades){
+        this.pokemon.habilidades.push(habilidade)
+      }
+    },
+    removerHabilidade(indice){
+      if(this.pokemon.habilidades[indice]){
+        this.pokemon.habilidades.splice(indice,1)
       }
     }
   }
