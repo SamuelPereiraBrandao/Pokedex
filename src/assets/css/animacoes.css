@@ -151,8 +151,12 @@
         }
         .lista-enter-active, .lista-leave-active{
           transition: all 0.25s ;
+          position: absolute;
         }
         .lista-enter-to, .lista-leave-from{
           opacity: 1;
           transform: translateX(0px);
+      }
+      .lista-move {
+        transition: 0.25s;
       }
