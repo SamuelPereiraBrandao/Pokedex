@@ -66,10 +66,12 @@
 
         <div class="row">
           <div class="col">
-            <select class="form-select">
-              <option>Id crescente</option>
-              <option>Id decrescrente</option>
-              <option>De A - Z</option>
+            <select class="form-select" v-model="ordenacao">
+              <option value="" disabled selected>Ordem</option>
+              <option value="1">ID Crescente</option>
+              <option value="2">ID Decrescrente</option>
+              <option value="3">De A - Z</option>
+              <option value="4">De Z - A</option>
             </select>
           </div>
         
@@ -109,11 +111,61 @@ export default {
   data: () => ({
     exibir: false,
     exibirEvolucoes: false,
-    pokemon:{
-
-    },
-    pokemons: []
+    pokemon:{},
+    pokemons: [],
+    ordenacao:''
   }),
+  watch:{
+    ordenacao(valorNovo){
+      console.log(valorNovo)
+      if(valorNovo == 1){ //ordenacao pot id crescente
+        this.pokemons.sort((proximo, atual) => {
+          if(atual.id < proximo.id){
+            return 1
+          }else if(atual.id > proximo.id){
+            return -1
+          }
+          return 0
+        })
+      }
+      if(valorNovo == 2){ //ordenacao pot id decrescente
+        this.pokemons.sort((proximo, atual) => {
+          if(atual.id < proximo.id){
+            return -1
+          }else if(atual.id > proximo.id){
+            return 1
+          }
+          return 0
+        })
+      }
+      if(valorNovo == 3){ //ordenacao alfabetica
+        this.pokemons.sort((proximo, atual) => {
+          //  1 caso a ordem esteja correta
+          if(atual.nome < proximo.nome){
+            return 1
+          }
+          // -1 caso a ordem esteja incorreta (inverter possições)
+          if(atual.nome > proximo.nome){
+            return -1
+          }
+          // 0 caso nenhuma ação seja necessaria
+          return 0
+        })
+      }
+      if(valorNovo == 4){ //ordenação alfabetica Z - A (localeCompare)
+        this.pokemons.sort((proximo, atual) => {
+       //   let resultado1 = atual.nome.localeCompare(proximo.nome)
+       //   let resultado2 = proximo.nome.localeCompare(atual.nome)
+
+          return atual.nome.localeCompare(proximo.nome)
+          //console.log('atual e o próximo:', resultado1)
+          //console.log('próximo e o atual:', resultado2)
+        })
+      }
+
+    }
+
+  },
   created(){
   fetch('http://localhost:3000/pokemons')
   .then(response => {
