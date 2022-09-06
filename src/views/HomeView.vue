@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="row mt-2">
-      
+
       <!-- início lado esquerdo -->
       <div class="col mb-2">
         <div class="card palco">
@@ -9,47 +9,47 @@
 
           <div class="card-body bg-pokebola bg-normal">
             <div class="pokemon">
-              
-              <transition 
-              @after-enter="exibirEvolucoes = true"
-              @before-leave="exibirEvolucoes = false"
 
-              enter-active-class="animate__animated animate__bounceIn"
-              leave-active-class="animate__animated animate__bounceOut"
-              >
-              <img :src="require(`@/assets/imgs/pokemons/${pokemon.imagem}`)" v-if="exibir">
-            </transition> 
+              <transition @after-enter="exibirEvolucoes = true" @before-leave="exibirEvolucoes = false"
+                enter-active-class="animate__animated animate__bounceIn"
+                leave-active-class="animate__animated animate__bounceOut">
+                <img :src="require(`@/assets/imgs/pokemons/${pokemon.imagem}`)" v-if="exibir">
+              </transition>
               <div class="evolucoes">
-              
-              <transition name="fade" v-for="e in pokemon.evolucoes" :key="e">
-               <img :src="require(`@/assets/imgs/pokemons/${e.toString().padStart(3, '0')}.png`)" v-if="exibirEvolucoes"> 
-              
-            </transition> 
-          
 
-          </div>
+                <transition name="fade" v-for="e in pokemon.evolucoes" :key="e">
+                  <img :src="require(`@/assets/imgs/pokemons/${e.toString().padStart(3, '0')}.png`)"
+                    v-if="exibirEvolucoes">
+
+                </transition>
+
+
+              </div>
             </div>
           </div>
 
           <div class="card-footer">
-         
-          <nav class="nav nav-pills nav-fill">
-            <router-link class="nav-item nav-link text-white" :to="{path: '/sobre'}" exact-active-class="active">Sobre</router-link>
-              <router-link class="nav-item nav-link text-white" :to="{path: '/status'}" exact-active-class="active">Status</router-link>
-              <router-link class="nav-item nav-link text-white" :to="{path: '/habilidades'}" exact-active-class="active">Habilidades</router-link>
-          </nav>
 
-          <div class="detalhes">
-            <!-- exibe dados de acordo com o menu de navegação -->     
-            <!-- {{pokemon}} -->
-            <router-view v-slot="{ Component }" :pokemon="pokemon" @adicionarHabilidade="adicionarHabilidade" @removerHabilidade="removerHabilidade">
-              <transition
-              enter-active-class="animate__animated animate__fadeIn">
-                <component :is="Component" />
-              </transition>
-            </router-view>
+            <nav class="nav nav-pills nav-fill">
+              <router-link class="nav-item nav-link text-white" :to="{path: '/sobre'}" exact-active-class="active">Sobre
+              </router-link>
+              <router-link class="nav-item nav-link text-white" :to="{path: '/status'}" exact-active-class="active">
+                Status</router-link>
+              <router-link class="nav-item nav-link text-white" :to="{path: '/habilidades'}"
+                exact-active-class="active">Habilidades</router-link>
+            </nav>
 
-          </div>
+            <div class="detalhes">
+              <!-- exibe dados de acordo com o menu de navegação -->
+              <!-- {{pokemon}} -->
+              <router-view v-slot="{ Component }" :pokemon="pokemon" @adicionarHabilidade="adicionarHabilidade"
+                @removerHabilidade="removerHabilidade">
+                <transition enter-active-class="animate__animated animate__fadeIn">
+                  <component :is="Component" />
+                </transition>
+              </router-view>
+
+            </div>
 
           </div>
         </div>
@@ -57,7 +57,7 @@
       <!-- fim lado esquerdo -->
 
       <!-- início lado direito -->
-      <div class="col mb-2 pokedex">        
+      <div class="col mb-2 pokedex">
         <div class="row">
           <div class="col">
             <h1>Pokédex</h1>
@@ -74,9 +74,13 @@
               <option value="4">De Z - A</option>
             </select>
           </div>
-        
+
           <div class="col">
-            <input type="text" class="form-control" placeholder="Pesquisar pokémon">
+            <!--<input type="text" class="form-control" placeholder="Pesquisar pokémon" v-model="nomePokemon"
+              @keyup.enter="filtrarPokemonsPorNome">
+              <br> -->
+            <input type="text" class="form-control" placeholder="Pesquisar Pokémons" v-model="nomePokemon2"
+              @keyup.enter="filtrarPokemonsPorNome">
           </div>
         </div>
 
@@ -84,16 +88,19 @@
           <div class="pokedex-catalogo">
 
             <!-- início listagem dinâmica -->
-            <div v-for="p in pokemons" :key="p.id"
-             :class="`cartao-pokemon bg-${p.tipo}`" @click="analisarPokemon(p)">
-              <h1>{{p.id}} {{p.nome}}</h1>
-              <span>{{p.tipo}}</span>
-              <div class="cartao-pokemon-img">
-                <transition appear enter-active-class="animate__animated animate__flipInX">
-                                <img :src="require(`@/assets/imgs/pokemons/${p.imagem}`)" >
-                </transition>
+            <transition-group name="ordenacao">
+
+
+              <div v-for="p in pokemons" :key="p.id" :class="`cartao-pokemon bg-${p.tipo}`" @click="analisarPokemon(p)">
+                <h1>{{p.id}} {{p.nome}}</h1>
+                <span>{{p.tipo}}</span>
+                <div class="cartao-pokemon-img">
+                  <transition appear enter-active-class="animate__animated animate__flipInX">
+                    <img :src="require(`@/assets/imgs/pokemons/${p.imagem}`)">
+                  </transition>
+                </div>
               </div>
-            </div>
+            </transition-group>
             <!-- fim listagem dinâmica -->
 
           </div>
@@ -111,51 +118,62 @@ export default {
   data: () => ({
     exibir: false,
     exibirEvolucoes: false,
-    pokemon:{},
+    pokemon: {},
     pokemons: [],
-    ordenacao:''
+    ordenacao: '',
+    nomePokemon: '',
+    nomePokemon2:''
   }),
-  watch:{
-    ordenacao(valorNovo){
+  watch: {
+    nomePokemon2(valorNovo){
+      fetch(`http://localhost:3000/pokemons?nome_like=${valorNovo}`)
+        .then(response => {
+          return response.json()
+        })
+        .then(data => {
+          this.pokemons = data
+        })
+    },
+    ordenacao(valorNovo) {
       console.log(valorNovo)
-      if(valorNovo == 1){ //ordenacao pot id crescente
+      if (valorNovo == 1) { //ordenacao pot id crescente
         this.pokemons.sort((proximo, atual) => {
-          if(atual.id < proximo.id){
+          if (atual.id < proximo.id) {
             return 1
-          }else if(atual.id > proximo.id){
+          } else if (atual.id > proximo.id) {
             return -1
           }
           return 0
         })
       }
-      if(valorNovo == 2){ //ordenacao pot id decrescente
+      if (valorNovo == 2) { //ordenacao pot id decrescente
         this.pokemons.sort((proximo, atual) => {
-          if(atual.id < proximo.id){
+          if (atual.id < proximo.id) {
             return -1
-          }else if(atual.id > proximo.id){
+          } else if (atual.id > proximo.id) {
             return 1
           }
           return 0
         })
       }
-      if(valorNovo == 3){ //ordenacao alfabetica
+      if (valorNovo == 3) { //ordenacao alfabetica
         this.pokemons.sort((proximo, atual) => {
           //  1 caso a ordem esteja correta
-          if(atual.nome < proximo.nome){
+          if (atual.nome < proximo.nome) {
             return 1
           }
           // -1 caso a ordem esteja incorreta (inverter possições)
-          if(atual.nome > proximo.nome){
+          if (atual.nome > proximo.nome) {
             return -1
           }
           // 0 caso nenhuma ação seja necessaria
           return 0
         })
       }
-      if(valorNovo == 4){ //ordenação alfabetica Z - A (localeCompare)
+      if (valorNovo == 4) { //ordenação alfabetica Z - A (localeCompare)
         this.pokemons.sort((proximo, atual) => {
-       //   let resultado1 = atual.nome.localeCompare(proximo.nome)
-       //   let resultado2 = proximo.nome.localeCompare(atual.nome)
+          //   let resultado1 = atual.nome.localeCompare(proximo.nome)
+          //   let resultado2 = proximo.nome.localeCompare(atual.nome)
 
           return atual.nome.localeCompare(proximo.nome)
           //console.log('atual e o próximo:', resultado1)
@@ -166,21 +184,21 @@ export default {
     }
 
   },
-  created(){
-  fetch('http://localhost:3000/pokemons')
-  .then(response => {
-    return response.json()
-  })
-  .then(data => {
-    this.pokemons = data
-  })
+  created() {
+    fetch('http://localhost:3000/pokemons')
+      .then(response => {
+        return response.json()
+      })
+      .then(data => {
+        this.pokemons = data
+      })
   },
-  methods:{
+  methods: {
     //se o pokemon atual é diferente do pokemon clicado
     //se o atributo exibir é true
-    analisarPokemon(p){
+    analisarPokemon(p) {
       let mudaPokemonAnalisado = false
-      if(this.pokemon.id != p.id && this.exibir == true){
+      if (this.pokemon.id != p.id && this.exibir == true) {
         setTimeout(() => {
           this.analisarPokemon(p)
         }, 250);
@@ -193,19 +211,28 @@ export default {
 
       //se a ação for de ocultar o pokemon
       //se a ação recursiva nao for chamada
-      if(!this.exibir && !mudaPokemonAnalisado){
+      if (!this.exibir && !mudaPokemonAnalisado) {
         this.pokemon = {}
       }
     },
-    adicionarHabilidade(habilidade){
-      if(this.pokemon.habilidades){
+    adicionarHabilidade(habilidade) {
+      if (this.pokemon.habilidades) {
         this.pokemon.habilidades.push(habilidade)
       }
     },
-    removerHabilidade(indice){
-      if(this.pokemon.habilidades[indice]){
-        this.pokemon.habilidades.splice(indice,1)
+    removerHabilidade(indice) {
+      if (this.pokemon.habilidades[indice]) {
+        this.pokemon.habilidades.splice(indice, 1)
       }
+    },
+    filtrarPokemonsPorNome() {
+      fetch(`http://localhost:3000/pokemons?nome_like=${this.nomePokemon}`)
+        .then(response => {
+          return response.json()
+        })
+        .then(data => {
+          this.pokemons = data
+        })
     }
   }
 
@@ -219,7 +246,8 @@ body {
 </style>
 
 <style scoped>
-  @import '@/assets/css/animacoes.css';
+@import '@/assets/css/animacoes.css';
+
 .pokedex {
   padding: 20px;
   background-color: #ffffff;
@@ -250,15 +278,15 @@ body {
   box-shadow: 2px 2px 2px rgba(200, 200, 200, 0.77);
 }
 
-.cartao-pokemon h1{
-  color:#fff;
+.cartao-pokemon h1 {
+  color: #fff;
   font-size: 14px;
   margin: 5px 0px 0px 5px;
   padding: 0px;
 }
 
-.cartao-pokemon span{
-  color:#fff;
+.cartao-pokemon span {
+  color: #fff;
   position: absolute;
   background: rgba(255, 255, 255, 0.3);
   font-size: 12px;
@@ -268,9 +296,9 @@ body {
 }
 
 .cartao-pokemon img {
-    max-width:60%;
-    max-height:60%;
-    float: right;
+  max-width: 60%;
+  max-height: 60%;
+  float: right;
 }
 
 .bg-grama {
@@ -317,13 +345,15 @@ body {
 .detalhes {
   margin: 20px 30px 20px 30px;
 }
-.evolucoes{
+
+.evolucoes {
   position: absolute;
   top: 0px;
-  right:0px;
+  right: 0px;
   height: 70px;
 }
-.evolucoes img{
+
+.evolucoes img {
   cursor: pointer;
   max-width: 100%;
   max-height: 100%;

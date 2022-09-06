@@ -160,3 +160,8 @@
       .lista-move {
         transition: 0.25s;
       }
+
+
+      .ordenacao-move{
+        transition: all 0.5s;
+      }
