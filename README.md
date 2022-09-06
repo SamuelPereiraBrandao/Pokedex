@@ -2,7 +2,7 @@
 <table align="center">
     <tr>
         <td>
-            <img src="" width="700px" alt="imagem-do-site" align="center">
+            <img src="./src/assets/pokedex.png" width="700px" alt="imagem-do-site" align="center">
         </td>
     </tr>
 
