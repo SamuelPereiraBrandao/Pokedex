@@ -6,13 +6,16 @@
         <div v-else>
         <table class="table text-white">
             <tbody>
+
+                <transition-group name="lista">
+            
                 <tr v-for="(h, indice) in pokemon.habilidades" :key="indice">
                     <td>{{h}}</td>
                     <td class="d-flex justify-content-end">
                         <button type="button" class="btn btn-danger btn-sm" @click="$emit('removerHabilidade', indice)">x</button>
                     </td>
                 </tr>
-   
+            </transition-group>
             </tbody>
         </table>
         <input type="text" class="form-control" placeholder="Adicionar habilidade" v-model="habilidade" @keyup.enter="adicionarHabilidade()">

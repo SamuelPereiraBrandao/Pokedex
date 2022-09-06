@@ -139,3 +139,20 @@
     transition: all 0.5s;
 }
       
+    /* transition group lista que tera um efeito de slide */
+        .lista-enter-from {
+          transform:translateX(-150px);
+          opacity: 0;
+        
+        }
+        .lista-leave-to{
+          transform:translateX(150px);
+          opacity: 0;
+        }
+        .lista-enter-active, .lista-leave-active{
+          transition: all 0.25s ;
+        }
+        .lista-enter-to, .lista-leave-from{
+          opacity: 1;
+          transform: translateX(0px);
+      }
