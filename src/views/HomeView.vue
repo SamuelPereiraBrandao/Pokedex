@@ -44,7 +44,7 @@
             <!-- {{pokemon}} -->
             <router-view v-slot="{ Component }" :pokemon="pokemon">
               <transition
-              enter-active-class="animate__animated animate__zoomInDown">
+              enter-active-class="animate__animated animate__fadeIn">
                 <component :is="Component" />
               </transition>
             </router-view>
@@ -87,7 +87,9 @@
               <h1>{{p.id}} {{p.nome}}</h1>
               <span>{{p.tipo}}</span>
               <div class="cartao-pokemon-img">
-                <img :src="require(`@/assets/imgs/pokemons/${p.imagem}`)" >
+                <transition appear enter-active-class="animate__animated animate__flipInX">
+                                <img :src="require(`@/assets/imgs/pokemons/${p.imagem}`)" >
+                </transition>
               </div>
             </div>
             <!-- fim listagem dinâmica -->
@@ -125,14 +127,23 @@ export default {
     //se o pokemon atual é diferente do pokemon clicado
     //se o atributo exibir é true
     analisarPokemon(p){
+      let mudaPokemonAnalisado = false
       if(this.pokemon.id != p.id && this.exibir == true){
         setTimeout(() => {
           this.analisarPokemon(p)
         }, 250);
+
+        mudaPokemonAnalisado = true
       }
       this.pokemon = p
       this.exibir = !this.exibir
       this.exibirEvolucoes = !this.exibirEvolucoes
+
+      //se a ação for de ocultar o pokemon
+      //se a ação recursiva nao for chamada
+      if(!this.exibir && !mudaPokemonAnalisado){
+        this.pokemon = {}
+      }
     }
   }
 

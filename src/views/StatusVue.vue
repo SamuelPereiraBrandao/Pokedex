@@ -1,5 +1,9 @@
 <template>
-    <div>
+    <div>   
+        <div v-if="!pokemon.id">
+        Selecione um Pokémon!
+    </div>
+    <div v-else>
         <span>Força:</span>
         <div class="progress mb-2">
             <div class="progress-bar" role="progressbar" :style="`width: ${pokemon.status.forca}%;`" :aria-valuenow="pokemon.status.forca" 
@@ -22,6 +26,7 @@
         <div class="progress mb-2">
             <div class="progress-bar" role="progressbar" :style="`width: ${pokemon.status.defesa}%;`" :aria-valuenow="pokemon.status.defesa" 
             aria-valuemin="0" aria-valuemax="100">{{pokemon.status.defesa}}</div>
+        </div>
         </div>
     </div>
 </template>

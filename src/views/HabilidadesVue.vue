@@ -1,5 +1,9 @@
 <template>
     <div>
+        <div v-if="!pokemon.id">
+            Selecione um Pokémon!
+        </div>
+        <div v-else>
         <table class="table text-white">
             <tbody>
                 <tr v-for="(h, indice) in pokemon.habilidades" :key="indice">
@@ -12,6 +16,7 @@
             </tbody>
         </table>
         <input type="text" class="form-control" placeholder="Adicionar habilidade">
+        </div>
     </div>
 </template>
 
