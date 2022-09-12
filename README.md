@@ -43,7 +43,7 @@ Foram utilizadas as seguintes tecnologias para desenvolver a aplicação "Empres
 
     #iniciar a aplicação
     $ npm run serve
-    $ json-server --watch db.json
+    $ json-server --watch bd.json
 
 ```
 
